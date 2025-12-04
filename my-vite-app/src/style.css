@@ -25,3 +25,43 @@
     font-size: 20px;
 }
 
+/* The Drawer Container */
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;             /* Stick to right side */
+    width: 350px;         /* Or 100% on mobile */
+    height: 100%;         /* Full height */
+    background: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    z-index: 2000;        /* Super high, above everything */
+
+    /* ANIMATION MAGIC */
+    transform: translateX(100%); /* Move 100% to the right (off screen) */
+    transition: transform 0.3s ease-in-out; /* Smooth slide */
+
+    /* Layout inside the drawer */
+    display: flex;
+    flex-direction: column;
+}
+
+/* The Class you add with TS to show it */
+.cart-drawer.open {
+    transform: translateX(0); /* Move back to position 0 (visible) */
+}
+
+/* Optional Backdrop */
+.cart-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999; /* Just behind the drawer */
+    display: none; /* Hidden by default */
+}
+
+.cart-backdrop.open {
+    display: block;
+}
