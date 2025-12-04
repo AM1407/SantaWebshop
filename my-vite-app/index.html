@@ -10,7 +10,25 @@
       <link rel="stylesheet" href="src/style.css" />
   </head>
   <body>
-    <div id="app" class="container"></div>
+    <div id="app" class="container-fluid">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center vh-100">
+                <form class="loginForm col-xs-12 col-md-8 text-center mx-auto my " action="/action_page.php">
+                    <h3>Welcome, please log in</h3>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="emailBtn" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="passwordBtn" placeholder="Enter password">
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="checkBox"> Remember me</label>
+                    </div>
+                    <button type="submit" class="Btn" id="submitBtn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
