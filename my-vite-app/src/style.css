@@ -1,97 +1,195 @@
-.loginForm{
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+:root {
+    --santa-red: #D42426;
+    --forest-green: #165B33;
+    --snow-white: #ffffff;
+    --gold: #F8B229;
+    --dark-bg: #0F2027;
 }
 
+/* 1. GLOBAL TYPOGRAPHY */
+body {
+    font-family: 'Nunito', sans-serif;
 
-.checkbox{
-    margin-top: 10px;
+    background:
+            linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+            url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?q=80&w=2574&auto=format&fit=crop');
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-#submitBtn{
-    margin-top: 20px;
-    padding: 5px;
-    background-color: #228B22;
-    color: #D42426;
-    border:#D42426 solid 2px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 20px;
+.festive-font {
+    font-family: 'Mountains of Christmas', cursive;
 }
 
-/* The Drawer Container */
-.cart-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;             /* Stick to right side */
-    width: 350px;         /* Or 100% on mobile */
-    height: 100%;         /* Full height */
-    background: white;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-    z-index: 2000;        /* Super high, above everything */
-
-    /* ANIMATION MAGIC */
-    transform: translateX(100%); /* Move 100% to the right (off screen) */
-    transition: transform 0.3s ease-in-out; /* Smooth slide */
-
-    /* Layout inside the drawer */
-    display: flex;
-    flex-direction: column;
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
-/* The Class you add with TS to show it */
-.cart-drawer.open {
-    transform: translateX(0); /* Move back to position 0 (visible) */
-}
-
-/* Optional Backdrop */
-.cart-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1999; /* Just behind the drawer */
-    display: none; /* Hidden by default */
-}
-
-.cart-backdrop.open {
-    display: block;
-}
-
-.login-container{
+/* 2. LOGIN STYLING */
+.login-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.login-box {
+    background: white;
+    border-radius: 15px;
+    border: 4px solid var(--santa-red);
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 0 0 8px white, 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.holly-decoration {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-control:focus {
+    border-color: var(--santa-red);
+    box-shadow: 0 0 0 0.25rem rgba(212, 36, 38, 0.25);
+}
+
+/* 3. MAIN APP GLASS EFFECT */
+.glass-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.5);
+
+    /* FIX: Ensure the header sits on top of the hero/products below it */
+    position: relative;
+    z-index: 100;
+}
+
+.hero-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+    /* Ensure it sits below the header */
+    position: relative;
+    z-index: 1;
+}
+
+/* 4. PRODUCT CARDS (Gift Style) */
+.product-card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    background: white;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2) !important;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: repeating-linear-gradient(
+            45deg,
+            var(--santa-red),
+            var(--santa-red) 10px,
+            #fff 10px,
+            #fff 20px
+    );
+    z-index: 2;
+}
+
+/* 5. BUTTONS */
+.btn-danger {
+    background-color: var(--santa-red);
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover {
+    background-color: #b21f1f;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: var(--forest-green);
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #0f4625;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--forest-green);
+    color: white;
+    border-color: var(--forest-green);
+}
+
+/* 6. CART DROPDOWN */
 .cart-dropdown-menu {
-    display: none; /* Hidden by default */
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    width: 300px;
+    width: 350px;
     background: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-radius: 8px;
-    z-index: 1000;
+    border-radius: 12px;
+    z-index: 2000;
+    margin-top: 10px;
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
 }
 
-/* The class JS adds to make it visible */
 .cart-dropdown-menu.show {
     display: block;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#cart-items-list {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.cart-empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 150px;
+    width: 100%;
+}
+
+#toast-container {
+    z-index: 10000 !important;
 }
