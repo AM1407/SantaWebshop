@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Santa's Webshop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+
+<div id="login-overlay" class="login-container">
+    <form class="login-box p-5 shadow-lg text-center position-relative">
+        <div class="holly-decoration">
+            <i class="fa-solid fa-holly-berry fa-3x text-success"></i>
+        </div>
+
+        <h1 class="mb-4 festive-font text-danger fw-bold">North Pole Entry</h1>
+
+        <div class="mb-3">
+            <input type="text" class="form-control form-control-lg" id="usernameInput" placeholder="Magical Name" required>
+        </div>
+
+        <div class="mb-4 input-group">
+            <input type="password" class="form-control form-control-lg border-end-0" id="passwordInput" placeholder="Secret Code">
+            <button class="btn border border-start-0 bg-white text-secondary" type="button" id="togglePassword">
+                <i class="fa-solid fa-eye"></i>
+            </button>
+        </div>
+
+        <div class="form-check text-start mb-4 ps-4">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Keep me logged in until Christmas</label>
+        </div>
+
+        <button type="submit" class="btn btn-danger btn-lg w-100 shadow-sm festive-btn" id="loginBtn">
+            <i class="fa-solid fa-key me-2"></i>Unlock Workshop
+        </button>
+    </form>
+</div>
+
+<div id="main-app" style="display: none;" class="container-fluid position-relative">
+
+    <div class="glass-header row align-items-center mt-3 p-3 rounded-4 shadow-sm mx-2">
+        <div class="col-md-3">
+            <form action="#">
+                <div class="input-group">
+                    <input type="text" class="form-control border-danger bg-light" id="searchInput" placeholder="Search for toys...">
+                    <button class="btn btn-danger" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-9 d-flex flex-column align-items-end">
+            <div id="user-display" class="mb-2 d-flex align-items-center justify-content-end gap-2">
+
+                <!-- UPDATED: Removed badge classes, added custom color and space -->
+                <span class="fw-bold fs-5" style="color: var(--forest-green);">
+                    Logged in: <span id="loggedInUser">Guest</span>
+                </span>
+
+                <button id="logoutBtn" class="btn btn-sm btn-outline-light text-danger bg-white border-0 shadow-sm" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+
+            <div id="cart-container" class="position-relative">
+                <button class="btn btn-warning text-dark fw-bold shadow-sm position-relative" id="shoppingCartButton">
+                    <i class="fa-solid fa-sleigh me-2"></i>Sleigh
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light">
+                        0
+                    </span>
+                </button>
+
+                <div id="cart-dropdown" class="cart-dropdown-menu shadow-lg border-0">
+                    <div class="p-3 bg-danger text-white rounded-top d-flex justify-content-between align-items-center">
+                        <h5 class="m-0 festive-font">Your Sleigh</h5>
+                        <button id="close-cart" class="btn-close btn-close-white btn-sm"></button>
+                    </div>
+
+                    <div class="cart-body p-2" style="max-height: 300px; overflow-y: auto;">
+                        <ul id="cart-items-list" class="list-unstyled m-0">
+                            <li class="cart-empty-message text-muted py-4">
+                                <i class="fa-regular fa-snowflake fa-2x mb-2 d-block text-secondary"></i>
+                                Empty as a chimney!
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="p-3 border-top bg-light rounded-bottom">
+                        <div class="d-flex justify-content-between fw-bold mb-3 fs-5">
+                            <span>Total:</span>
+                            <span id="cart-total-price" class="text-success">€0.00</span>
+                        </div>
+                        <button class="btn btn-success w-100 checkout-btn fw-bold shadow-sm">
+                            <i class="fa-solid fa-envelope-circle-check me-2"></i>Send Letter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-4">
+        <div class="col-lg-8 mx-auto text-center hero-card p-4 rounded-4">
+            <h1 class="display-3 festive-font text-danger fw-bold text-shadow">Santa's Workshop</h1>
+            <p class="lead text-dark" id="welcomeBack">Ho Ho Ho! Welcome back.</p>
+        </div>
+    </div>
+
+    <div class="row g-4 p-4" id="productList">
+    </div>
+
+</div>
+
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title festive-font fs-3">
+                    <i class="fa-solid fa-clipboard-check me-2"></i>Naughty or Nice List?
+                </h5>
+                <button type="button" class="btn-close btn-close-white" id="closeModalBtn"></button>
+            </div>
+            <div class="modal-body bg-light">
+                <p class="text-muted text-center mb-4">Checking it twice...</p>
+
+                <ul id="checkout-summary-list" class="list-group mb-3 shadow-sm"></ul>
+
+                <div class="d-flex justify-content-between fw-bold fs-4 p-3 bg-white rounded shadow-sm border text-success">
+                    <span>Total Gifts:</span>
+                    <span id="checkout-total-price">€0.00</span>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-outline-secondary" id="cancelCheckoutBtn">Not yet</button>
+                <button type="button" class="btn btn-danger fw-bold px-4" id="confirmOrderBtn">
+                    <i class="fa-solid fa-sleigh me-2"></i>Launch Sleigh
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+<script type="module" src="src/main.ts"></script>
+</body>
+</html>
