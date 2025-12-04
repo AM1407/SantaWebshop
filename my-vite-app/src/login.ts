@@ -1,15 +1,4 @@
-const userName = document.querySelector('#usernameInput') as HTMLInputElement;
-const password = document.querySelector('#passwordInput') as HTMLInputElement;
-const loginBtn = document.querySelector('#loginBtn') as HTMLButtonElement;
-const checkBox = document.querySelector('#rememberMe') as HTMLInputElement;
-
-const loginOverlay = document.querySelector('#login-overlay') as HTMLElement;
-const userDisplay = document.querySelector('#loggedInUser');
-
-const mainApp = document.querySelector('#main-app') as HTMLElement;
-
-let loggedInUser: User | null = null;
-
+// 1. Interfaces
 interface User {
     id: number;
     name: string;
@@ -18,70 +7,86 @@ interface User {
     role: string;
 }
 
-function showApp() {
-    if (loginOverlay) loginOverlay.style.display = 'none';
-    if (mainApp) mainApp.style.display = 'block';
-}
+// 2. Wait for HTML to load (Safety wrapper)
+document.addEventListener('DOMContentLoaded', () => {
 
-loginBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const username = userName.value;
-    const passwordValue = password.value;
-    const rememberMe = checkBox.checked;
+    // Selectors
+    const loginForm = document.querySelector('.login-box') as HTMLFormElement; // Select the FORM, not just the button
+    const userNameInput = document.querySelector('#usernameInput') as HTMLInputElement;
+    const passwordInput = document.querySelector('#passwordInput') as HTMLInputElement;
+    const checkBox = document.querySelector('#rememberMe') as HTMLInputElement;
 
-    fetch('http://localhost:3000/users')
-        .then(response => response.json())
-        .then((users: User[]) => {
-            const user = users.find(u => u.name === username && u.password === passwordValue);
-            if (user) {
-                loggedInUser = user;
-                alert(`Welcome, ${user.name}!`);
-                if (rememberMe) {
-                    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    // UI Containers
+    const loginOverlay = document.querySelector('#login-overlay') as HTMLElement;
+    const mainApp = document.querySelector('#main-app') as HTMLElement;
+    const userDisplay = document.querySelector('#loggedInUser');
+
+    // Debug: Check if elements exist
+    if (!loginForm || !loginOverlay || !mainApp) {
+        console.error("Critical: HTML elements not found. Check IDs.");
+        return;
+    }
+
+    // Helper: Hide Login, Show App
+    const showApp = (user: User) => {
+        console.log("Switching to Main App view...");
+        loginOverlay.style.display = 'none';
+        mainApp.style.display = 'block';
+        if (userDisplay) userDisplay.textContent = user.name;
+    };
+
+    // 3. LISTEN TO FORM SUBMIT (Handles Click AND Enter key)
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // STOP the page reload
+        console.log("Form submitted. Processing login...");
+
+        const username = userNameInput.value;
+        const passwordValue = passwordInput.value;
+        const rememberMe = checkBox.checked;
+
+        fetch('http://localhost:3000/users')
+            .then(response => response.json())
+            .then((users: User[]) => {
+                const user = users.find(u => u.name === username && u.password === passwordValue);
+
+                if (user) {
+                    console.log("User found:", user.name);
+                    alert(`Welcome, ${user.name}!`);
+
+                    // Save Session
+                    if (rememberMe) {
+                        localStorage.setItem('loggedInUser', JSON.stringify(user));
+                    } else {
+                        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
+                    }
+
+                    // Switch View
+                    showApp(user);
                 } else {
-                    sessionStorage.setItem('loggedInUser', JSON.stringify(user));
+                    alert('Invalid username or password.');
                 }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Login system offline (Check json-server).');
+            });
+    });
 
-            showApp()
+    // 4. Check for existing session on load
+    const checkSession = () => {
+        const storedUser = localStorage.getItem('loggedInUser') || sessionStorage.getItem('loggedInUser');
 
-            if (userDisplay) {
-                userDisplay.textContent = user.name;
-            }
-            } else {
-                alert('Invalid username or password. Please try again.');
-            }
-        })
+        if (storedUser) {
+            const user: User = JSON.parse(storedUser);
+            console.log("Session found for:", user.name);
+            showApp(user);
+        } else {
+            // Ensure correct initial state
+            console.log("No session. Showing login.");
+            loginOverlay.style.display = 'flex'; // Make sure flex/block matches your CSS
+            mainApp.style.display = 'none';
+        }
+    };
 
-        .catch(error => {
-            console.error('Error fetching users:', error);
-            alert('An error occurred while trying to log in. Please try again later.');
-        });
+    checkSession();
 });
-
-window.addEventListener('load', () => {
-
-    const storedUser = localStorage.getItem('loggedInUser');
-
-    if (storedUser) {
-        const parsedUser: User = JSON.parse(storedUser);
-
-        if (userName) userName.value = parsedUser.name;
-        if (password) password.value = parsedUser.password;
-        if (checkBox) checkBox.checked = true;
-    }
-
-
-    const activeSession = sessionStorage.getItem('loggedInUser');
-    if (activeSession) {
-        const parsedSession: User = JSON.parse(activeSession);
-        loggedInUser = parsedSession;
-
-        showApp();
-
-        if (userDisplay) userDisplay.textContent = parsedSession.name;
-    }else {
-        if (loginOverlay) loginOverlay.style.display = 'block';
-        if (mainApp) mainApp.style.display = 'none';
-    }
-});
-
