@@ -13,7 +13,7 @@ const searchForm = document.querySelector('#searchInput')?.closest('form');
 
 let allProducts: Product[] = [];
 
-function createProductCard(product: Product): string{
+function createProductCard(product: product): string{
     return `
     <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="card h-100 shadow-sm product-card">
@@ -40,7 +40,7 @@ function createProductCard(product: Product): string{
     `;
 }
 
-function renderProducts(products: Product[]) {
+function renderProducts(products: product[]) {
     if (!productList) return;
 
     if (products.length === 0) {
@@ -73,6 +73,31 @@ async function initShop() {
         }
     }
 }
+
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+
+        const filtered = allProducts.filter(product =>
+            product.title.toLowerCase().includes(searchTerm) ||
+            product.category.toLowerCase().includes(searchTerm)
+        );
+
+        renderProducts(filtered);
+    });
+}
+
+if (searchForm) {
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (productList) {
+        initShop();
+    }
+});
 
 
 
