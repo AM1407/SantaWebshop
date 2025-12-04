@@ -4,28 +4,28 @@
       "id": "1",
       "name": "Santa Claus",
       "email": "santa@northpole.com",
-      "password": "$2a$10$J5rUrpWcu6qc9gQcVED8L.Rzkw..yyorGORe6gQUwAKl9Q0FoufKe",
+      "password": "HoHoHo",
       "role": "admin"
     },
     {
       "id": "2",
       "name": "Buddy the Elf",
       "email": "buddy@elvesworkshop.com",
-      "password": "$2a$10$bUlXQmHqwAgBaUFlyyYYmu9F3ScXXtoHywa//Oi6wWQwf79hT6NI6",
+      "password": "PointyEars",
       "role": "toy_maker"
     },
     {
       "id": "3",
       "name": "Frostina Snowflake",
       "email": "frostina@northpole.com",
-      "password": "$2a$10$RN9ZDMNOEYczoKD6JRfRrerirz.V8vRLmaKgW91rkKNwS23LBHR5.",
+      "password": "No2TheSame",
       "role": "logistics_manager"
     },
     {
       "id": "fa3d",
       "name": "Massimo",
       "email": "mas@mas.com",
-      "password": "$2b$10$33ODTunYgGq8jNsmq0S7DeocqQhZ2BCjShXOcBAXI9S6kI48lpeR.",
+      "password": "Syntra.pxl",
       "role": "logistics_manager"
     }
   ],
