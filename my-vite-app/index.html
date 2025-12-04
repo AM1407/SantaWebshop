@@ -16,8 +16,6 @@
 </head>
 <body>
 
-<!-- REMOVED SNOW CONTAINER -->
-
 <div id="login-overlay" class="login-container">
     <form class="login-box p-5 shadow-lg text-center position-relative">
         <div class="holly-decoration">
@@ -54,7 +52,7 @@
         <div class="col-md-3">
             <form action="#">
                 <div class="input-group">
-                    <input type="text" class="form-control border-0 bg-light" id="searchInput" placeholder="Search for toys...">
+                    <input type="text" class="form-control border-danger bg-light" id="searchInput" placeholder="Search for toys...">
                     <button class="btn btn-danger" type="submit">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -64,9 +62,12 @@
 
         <div class="col-md-9 d-flex flex-column align-items-end">
             <div id="user-display" class="mb-2 d-flex align-items-center justify-content-end gap-2">
-                <span class="text-white bg-success badge rounded-pill fs-6 px-3 py-2 shadow-sm">
-                    <i class="fa-solid fa-user-elf me-2"></i><span id="loggedInUser">Guest</span>
+
+                <!-- UPDATED: Removed badge classes, added custom color and space -->
+                <span class="fw-bold fs-5" style="color: var(--forest-green);">
+                    Logged in: <span id="loggedInUser">Guest</span>
                 </span>
+
                 <button id="logoutBtn" class="btn btn-sm btn-outline-light text-danger bg-white border-0 shadow-sm" title="Logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
@@ -88,7 +89,7 @@
 
                     <div class="cart-body p-2" style="max-height: 300px; overflow-y: auto;">
                         <ul id="cart-items-list" class="list-unstyled m-0">
-                            <li class="text-muted text-center py-4">
+                            <li class="cart-empty-message text-muted py-4">
                                 <i class="fa-regular fa-snowflake fa-2x mb-2 d-block text-secondary"></i>
                                 Empty as a chimney!
                             </li>

@@ -11,8 +11,8 @@ body {
     font-family: 'Nunito', sans-serif;
 
     background:
-            linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
-            url('src/img/xmasBG.jpg');
+            linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+            url('https://images.unsplash.com/photo-1543589077-47d81606c1bf?q=80&w=2574&auto=format&fit=crop');
 
     background-size: cover;
     background-position: center;
@@ -160,10 +160,7 @@ body {
     width: 350px;
     background: white;
     border-radius: 12px;
-
-    /* Increased Z-Index to be safe */
     z-index: 2000;
-
     margin-top: 10px;
     overflow: hidden;
     animation: slideDown 0.3s ease;
@@ -176,6 +173,21 @@ body {
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+#cart-items-list {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.cart-empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 150px;
+    width: 100%;
 }
 
 #toast-container {
