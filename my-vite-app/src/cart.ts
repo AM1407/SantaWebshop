@@ -1,15 +1,14 @@
-interface CartItem {
+export interface CartItem {
     id: string;
     name: string;
     price: number;
     quantity: number;
 }
 
+// 1. EXPORT the cart so checkout.ts can read it
+export let cart: CartItem[] = [];
 
-let cart: CartItem[] = [];
-
-
-const productList = document.querySelector('#productList'); // Parent container
+const productList = document.querySelector('#productList');
 const cartCount = document.querySelector('#cart-count');
 const cartTotal = document.querySelector('#cart-total-price');
 const cartItemsList = document.querySelector('#cart-items-list');
@@ -17,16 +16,18 @@ const cartDropdown = document.querySelector('#cart-dropdown');
 const shoppingCartBtn = document.querySelector('#shoppingCartButton');
 const closeCartBtn = document.querySelector('#close-cart');
 
+// 2. EXPORT a reset function so checkout.ts can empty the cart
+export function resetCart() {
+    cart = []; // Empty the array
+    updateCartUI(); // Update the visuals
+}
 
-function updateCartUI() {
-
+export function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     if (cartCount) cartCount.textContent = totalItems.toString();
 
-
     const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     if (cartTotal) cartTotal.textContent = `€${totalPrice.toFixed(2)}`;
-
 
     if (cartItemsList) {
         if (cart.length === 0) {
@@ -48,34 +49,26 @@ function updateCartUI() {
     }
 }
 
-
 function addToCart(id: string, name: string, price: number) {
     const existingItem = cart.find(item => item.id === id);
-
     if (existingItem) {
         existingItem.quantity++;
     } else {
         cart.push({ id, name, price, quantity: 1 });
     }
-
     updateCartUI();
-
-
     cartDropdown?.classList.add('show');
 }
-
 
 if (productList) {
     productList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-
         const button = target.closest('.add-to-cart-btn') as HTMLElement;
 
         if (button) {
             const id = button.dataset.id!;
             const name = button.dataset.name!;
             const price = parseFloat(button.dataset.price!);
-
             addToCart(id, name, price);
         }
     });
@@ -85,13 +78,11 @@ if (cartItemsList) {
     cartItemsList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
 
-
         if (target.classList.contains('remove-btn')) {
             const id = target.dataset.id;
             cart = cart.filter(item => item.id !== id);
             updateCartUI();
         }
-
 
         if (target.classList.contains('decrease-btn')) {
             const id = target.dataset.id;
@@ -106,7 +97,6 @@ if (cartItemsList) {
         }
     });
 }
-
 
 shoppingCartBtn?.addEventListener('click', () => {
     cartDropdown?.classList.toggle('show');
