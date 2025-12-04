@@ -103,6 +103,38 @@
 
 </div>
 
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-clipboard-check me-2"></i>Review Your Order
+                </h5>
+                <button type="button" class="btn-close btn-close-white" id="closeModalBtn"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted">Please confirm the items in your sleigh:</p>
+
+                <!-- Summary List -->
+                <ul id="checkout-summary-list" class="list-group mb-3">
+                    <!-- Items injected via TS -->
+                </ul>
+
+                <div class="d-flex justify-content-between fw-bold fs-5">
+                    <span>Total:</span>
+                    <span id="checkout-total-price">€0.00</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelCheckoutBtn">Keep Shopping</button>
+                <button type="button" class="btn btn-danger" id="confirmOrderBtn">
+                    <i class="fa-solid fa-envelope me-2"></i>Send to Santa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="module" src="src/main.ts"></script>
 </body>
 </html>
