@@ -2,8 +2,8 @@
 interface Product {
     id: string;
     name: string;
-    price: number;
     description: string;
+    price: number;
     category: string;
     stock: number;
     image?: string;
@@ -16,9 +16,7 @@ const searchForm = document.querySelector('#searchInput')?.closest('form');
 
 let allProducts: Product[] = [];
 
-// 2. Updated Card Template
 function createProductCard(product: Product): string {
-
     const imageUrl = product.image || 'https://placehold.co/300x300/png?text=Gift';
 
     const ratingHtml = product.rating
@@ -48,12 +46,13 @@ function createProductCard(product: Product): string {
             
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title text-truncate" title="${product.name}">${product.name}</h5>
-                <p class="card-text small text-muted text-truncate">${product.description}</p>
+                
+                <!-- FIX: Removed 'text-truncate' class so full description shows -->
+                <p class="card-text small text-muted">${product.description}</p>
                 
                 <div class="mt-auto pt-3 d-flex justify-content-between align-items-center border-top">
                     ${ratingHtml}
                     
-                    <!-- FIX: Added data-name and data-price here! -->
                     <button 
                         class="btn btn-outline-success btn-sm add-to-cart-btn" 
                         data-id="${product.id}" 
@@ -72,7 +71,6 @@ function createProductCard(product: Product): string {
 
 function renderProducts(products: Product[]) {
     if (!productList) return;
-
     if (products.length === 0) {
         productList.innerHTML = `
             <div class="col-12 text-center mt-5">
@@ -89,7 +87,7 @@ function renderProducts(products: Product[]) {
 async function initShop() {
     try {
         const response = await fetch('http://localhost:3000/products');
-        if (!response.ok) throw new Error('Failed to connect to Santa\'s database');
+        if (!response.ok) throw new Error('Failed to connect DB');
 
         const data = await response.json() as Product[];
         allProducts = data;
@@ -104,22 +102,15 @@ async function initShop() {
 
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-
-        const filtered = allProducts.filter(product =>
-            product.name.toLowerCase().includes(searchTerm) ||
-            product.category.toLowerCase().includes(searchTerm)
+        const val = (e.target as HTMLInputElement).value.toLowerCase();
+        const filtered = allProducts.filter(p =>
+            p.name.toLowerCase().includes(val) || p.category.toLowerCase().includes(val)
         );
-
         renderProducts(filtered);
     });
 }
 
-if (searchForm) {
-    searchForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-    });
-}
+if (searchForm) searchForm.addEventListener('submit', (e) => e.preventDefault());
 
 document.addEventListener('DOMContentLoaded', () => {
     if (productList) {
