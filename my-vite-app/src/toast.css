@@ -15,3 +15,8 @@
     opacity: 1;
     transform: translateX(0); /* Slide in */
 }
+
+/* Force Toast to sit on top of Modals (z-index 1055) and Backdrops (1050) */
+#toast-container {
+    z-index: 10000 !important;
+}
