@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.querySelector('#passwordInput') as HTMLInputElement;
     const checkBox = document.querySelector('#rememberMe') as HTMLInputElement;
 
+    // New Selector for the Eye Icon
+    const togglePasswordBtn = document.querySelector('#togglePassword') as HTMLButtonElement;
+
     const loginOverlay = document.querySelector('#login-overlay') as HTMLElement;
     const mainApp = document.querySelector('#main-app') as HTMLElement;
 
@@ -24,6 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!loginForm || !loginOverlay || !mainApp) {
         console.error("Critical: HTML elements not found.");
         return;
+    }
+
+    // --- TOGGLE PASSWORD VISIBILITY ---
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener('click', () => {
+            // 1. Toggle the type
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // 2. Toggle the Eye Icon
+            const icon = togglePasswordBtn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            }
+        });
     }
 
     const showApp = (user: User) => {
