@@ -78,3 +78,20 @@
     justify-content: center;
     align-items: center;
 }
+
+.cart-dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+/* The class JS adds to make it visible */
+.cart-dropdown-menu.show {
+    display: block;
+}
