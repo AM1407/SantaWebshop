@@ -26,11 +26,19 @@ loginBtn.addEventListener('click', (e) => {
                 if (rememberMe) {
                     localStorage.setItem('loggedInUser', JSON.stringify(user));
                 }
-                window.location.href = 'dashboard.html';
+            const loginOverlay = document.querySelector('#login-overlay');
+            const userDisplay = document.querySelector('#loggedInUser');
+
+            loginOverlay?.classList.add('d-none');
+
+            if (userDisplay) {
+                userDisplay.textContent = user.name;
+            }
             } else {
-                alert('Invalid username or password.');
+                alert('Invalid username or password. Please try again.');
             }
         })
+
         .catch(error => {
             console.error('Error fetching users:', error);
             alert('An error occurred while trying to log in. Please try again later.');
