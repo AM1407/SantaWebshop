@@ -1,42 +1,63 @@
-// 1. Define the Product Interface (Make sure this has a capital 'P')
+// 1. Updated Interface to match your new JSON structure
 interface Product {
-    id: number;
-    title: string;
-    description: string;
+    id: string;
+    name: string;
     price: number;
+    description: string;
     category: string;
-    image: string;
-    rating: { rate: number; count: number };
+    stock: number;
+    image?: string;      // Add "image": "url" in your db.json to see specific photos
+    rating?: { rate: number; count: number };
 }
 
-// 2. Select DOM Elements
 const productList = document.querySelector('#productList') as HTMLElement;
 const searchInput = document.querySelector('#searchInput') as HTMLInputElement;
 const searchForm = document.querySelector('#searchInput')?.closest('form');
 
-// State to hold all products (Ensure 'Product[]' uses capital P)
 let allProducts: Product[] = [];
 
-// 3. Function to Create HTML for a Single Card
-// (Ensure 'product: Product' uses capital P)
+// 2. Updated Card Template
 function createProductCard(product: Product): string {
+
+    // Fallback if image is missing in DB
+    const imageUrl = product.image || 'https://placehold.co/300x300/png?text=Gift';
+
+    // Fallback if rating is missing
+    const ratingHtml = product.rating
+        ? `<small class="text-warning"><i class="fa-solid fa-star"></i> ${product.rating.rate}</small>`
+        : `<small class="text-muted"><i class="fa-regular fa-star"></i> New</small>`;
+
+    // Stock Logic
+    const isOutOfStock = product.stock === 0;
+    const stockBadge = isOutOfStock
+        ? '<span class="badge bg-secondary">Out of Stock</span>'
+        : `<span class="badge bg-success">${product.stock} left</span>`;
+
+    const btnState = isOutOfStock ? 'disabled' : '';
+
     return `
-    <div class="col-sm-6 col-md-4 col-lg-3">
+    <!-- GRID SETTING: col-md-4 and col-lg-4 create a 3-column layout -->
+    <div class="col-sm-6 col-md-4 col-lg-4">
         <div class="card h-100 shadow-sm product-card">
-            <div class="position-relative" style="height: 200px; overflow: hidden;">
-                <img src="${product.image}" class="card-img-top w-100 h-100 object-fit-contain p-3" alt="${product.title}">
-                <span class="position-absolute top-0 end-0 badge bg-danger m-2 rounded-pill">
-                    €${product.price.toFixed(2)}
-                </span>
+            <!-- Image Container: Fixed height to ensure alignment -->
+            <div class="position-relative bg-white border-bottom" style="height: 250px; overflow: hidden;">
+                <img src="${imageUrl}" 
+                     class="card-img-top w-100 h-100 object-fit-contain p-3" 
+                     alt="${product.name}">
+                
+                <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-1 align-items-end">
+                    <span class="badge bg-danger rounded-pill shadow-sm">€${product.price.toFixed(2)}</span>
+                    ${stockBadge}
+                </div>
             </div>
+            
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title text-truncate" title="${product.title}">${product.title}</h5>
-                <p class="card-text small text-muted text-truncate">${product.category}</p>
-                <div class="mt-auto d-flex justify-content-between align-items-center">
-                    <small class="text-warning">
-                        <i class="fa-solid fa-star"></i> ${product.rating.rate}
-                    </small>
-                    <button class="btn btn-outline-success btn-sm add-to-cart-btn" data-id="${product.id}">
+                <h5 class="card-title text-truncate" title="${product.name}">${product.name}</h5>
+                <p class="card-text small text-muted text-truncate">${product.description}</p>
+                
+                <div class="mt-auto pt-3 d-flex justify-content-between align-items-center border-top">
+                    ${ratingHtml}
+                    <button class="btn btn-outline-success btn-sm add-to-cart-btn" data-id="${product.id}" ${btnState}>
                         <i class="fa-solid fa-plus"></i> Add
                     </button>
                 </div>
@@ -46,7 +67,6 @@ function createProductCard(product: Product): string {
     `;
 }
 
-// 4. Function to Render the List
 function renderProducts(products: Product[]) {
     if (!productList) return;
 
@@ -60,23 +80,17 @@ function renderProducts(products: Product[]) {
         `;
         return;
     }
-
-    // Join all card strings and inject into HTML
     productList.innerHTML = products.map(createProductCard).join('');
 }
 
-// 5. Fetch Logic
 async function initShop() {
     try {
         const response = await fetch('http://localhost:3000/products');
-
         if (!response.ok) throw new Error('Failed to connect to Santa\'s database');
 
-        // Explicitly tell TypeScript the data we got back is an array of 'Product'
         const data = await response.json() as Product[];
         allProducts = data;
         renderProducts(allProducts);
-
     } catch (error) {
         console.error(error);
         if (productList) {
@@ -85,13 +99,12 @@ async function initShop() {
     }
 }
 
-// 6. Search Logic
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
         const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
 
         const filtered = allProducts.filter(product =>
-            product.title.toLowerCase().includes(searchTerm) ||
+            product.name.toLowerCase().includes(searchTerm) ||
             product.category.toLowerCase().includes(searchTerm)
         );
 
@@ -99,16 +112,14 @@ if (searchInput) {
     });
 }
 
-// Prevent form submit refresh
 if (searchForm) {
     searchForm.addEventListener('submit', (e) => {
         e.preventDefault();
     });
 }
 
-// Start the shop when page loads
 document.addEventListener('DOMContentLoaded', () => {
     if (productList) {
-        initShop();
+        void initShop();
     }
 });

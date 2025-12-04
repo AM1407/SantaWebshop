@@ -36,7 +36,8 @@
       "price": 9999.99,
       "stock": 3,
       "category": "transport",
-      "description": "High-speed sleigh powered by Christmas spirit and reindeer magic."
+      "description": "High-speed sleigh powered by Christmas spirit and reindeer magic.",
+      "image": "src/img/sleighPic.png"
     },
     {
       "id": "2",
@@ -44,7 +45,8 @@
       "price": 24.95,
       "stock": 120,
       "category": "clothing",
-      "description": "Green and red hat with a jingling bell — perfect for festive productivity."
+      "description": "Green and red hat with a jingling bell — perfect for festive productivity.",
+      "image": "src/img/elfHatPic.png"
     },
     {
       "id": "3",
@@ -52,7 +54,8 @@
       "price": 12.5,
       "stock": 50,
       "category": "food",
-      "description": "Premium blend of oats, starlight, and holiday cheer for elite reindeer."
+      "description": "Premium blend of oats, starlight, and holiday cheer for elite reindeer.",
+      "image": "src/img/reindeerFeed.png"
     },
     {
       "id": "4",
@@ -60,7 +63,8 @@
       "price": 299.99,
       "stock": 15,
       "category": "tech",
-      "description": "Never get lost in a snowstorm again — find your way back to the workshop!"
+      "description": "Never get lost in a snowstorm again — find your way back to the workshop!",
+        "image": "src/img/beaconPic.png"
     },
     {
       "id": "5",
@@ -68,7 +72,8 @@
       "price": 19.99,
       "stock": 200,
       "category": "crafts",
-      "description": "Everything you need to wrap presents with perfect festive flair."
+      "description": "Everything you need to wrap presents with perfect festive flair.",
+        "image": "src/img/giftWrappingSet.png"
     },
     {
       "id": "6",
@@ -76,7 +81,8 @@
       "price": 8.99,
       "stock": 75,
       "category": "food",
-      "description": "Explosive chocolate experience that melts into the creamiest cocoa."
+      "description": "Explosive chocolate experience that melts into the creamiest cocoa.",
+        "image": "src/img/cocoaBombs.png"
     }
   ]
 }
