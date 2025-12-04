@@ -3,8 +3,10 @@ const password = document.querySelector('#passwordInput') as HTMLInputElement;
 const loginBtn = document.querySelector('#loginBtn') as HTMLButtonElement;
 const checkBox = document.querySelector('#rememberMe') as HTMLInputElement;
 
-const loginOverlay = document.querySelector('#login-overlay');
+const loginOverlay = document.querySelector('#login-overlay') as HTMLElement;
 const userDisplay = document.querySelector('#loggedInUser');
+
+const mainApp = document.querySelector('#main-app') as HTMLElement;
 
 let loggedInUser: User | null = null;
 
@@ -14,6 +16,11 @@ interface User {
     email: string;
     password: string;
     role: string;
+}
+
+function showApp() {
+    if (loginOverlay) loginOverlay.style.display = 'none';
+    if (mainApp) mainApp.style.display = 'block';
 }
 
 loginBtn.addEventListener('click', (e) => {
@@ -35,7 +42,7 @@ loginBtn.addEventListener('click', (e) => {
                     sessionStorage.setItem('loggedInUser', JSON.stringify(user));
                 }
 
-            loginOverlay?.classList.add('d-none');
+            showApp()
 
             if (userDisplay) {
                 userDisplay.textContent = user.name;
@@ -58,14 +65,9 @@ window.addEventListener('load', () => {
     if (storedUser) {
         const parsedUser: User = JSON.parse(storedUser);
 
-
         if (userName) userName.value = parsedUser.name;
         if (password) password.value = parsedUser.password;
-
-
         if (checkBox) checkBox.checked = true;
-
-
     }
 
 
@@ -73,8 +75,13 @@ window.addEventListener('load', () => {
     if (activeSession) {
         const parsedSession: User = JSON.parse(activeSession);
         loggedInUser = parsedSession;
-        loginOverlay?.classList.add('d-none');
+
+        showApp();
+
         if (userDisplay) userDisplay.textContent = parsedSession.name;
+    }else {
+        if (loginOverlay) loginOverlay.style.display = 'block';
+        if (mainApp) mainApp.style.display = 'none';
     }
 });
 
