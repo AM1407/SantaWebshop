@@ -1,0 +1,17 @@
+/* Container for stacking toasts */
+.toast-container {
+    z-index: 1060; /* Higher than Bootstrap modal (1055) */
+}
+
+/* The Toast itself */
+.toast {
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateX(100%); /* Start off-screen right */
+}
+
+/* Animation class */
+.toast.show {
+    opacity: 1;
+    transform: translateX(0); /* Slide in */
+}
