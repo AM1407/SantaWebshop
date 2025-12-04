@@ -1,4 +1,4 @@
-// 1. Updated Interface to match your new JSON structure
+// 1. Interface
 interface Product {
     id: string;
     name: string;
@@ -6,7 +6,7 @@ interface Product {
     description: string;
     category: string;
     stock: number;
-    image?: string;      // Add "image": "url" in your db.json to see specific photos
+    image?: string;
     rating?: { rate: number; count: number };
 }
 
@@ -19,15 +19,12 @@ let allProducts: Product[] = [];
 // 2. Updated Card Template
 function createProductCard(product: Product): string {
 
-    // Fallback if image is missing in DB
     const imageUrl = product.image || 'https://placehold.co/300x300/png?text=Gift';
 
-    // Fallback if rating is missing
     const ratingHtml = product.rating
         ? `<small class="text-warning"><i class="fa-solid fa-star"></i> ${product.rating.rate}</small>`
         : `<small class="text-muted"><i class="fa-regular fa-star"></i> New</small>`;
 
-    // Stock Logic
     const isOutOfStock = product.stock === 0;
     const stockBadge = isOutOfStock
         ? '<span class="badge bg-secondary">Out of Stock</span>'
@@ -36,10 +33,8 @@ function createProductCard(product: Product): string {
     const btnState = isOutOfStock ? 'disabled' : '';
 
     return `
-    <!-- GRID SETTING: col-md-4 and col-lg-4 create a 3-column layout -->
     <div class="col-sm-6 col-md-4 col-lg-4">
         <div class="card h-100 shadow-sm product-card">
-            <!-- Image Container: Fixed height to ensure alignment -->
             <div class="position-relative bg-white border-bottom" style="height: 250px; overflow: hidden;">
                 <img src="${imageUrl}" 
                      class="card-img-top w-100 h-100 object-fit-contain p-3" 
@@ -57,7 +52,15 @@ function createProductCard(product: Product): string {
                 
                 <div class="mt-auto pt-3 d-flex justify-content-between align-items-center border-top">
                     ${ratingHtml}
-                    <button class="btn btn-outline-success btn-sm add-to-cart-btn" data-id="${product.id}" ${btnState}>
+                    
+                    <!-- FIX: Added data-name and data-price here! -->
+                    <button 
+                        class="btn btn-outline-success btn-sm add-to-cart-btn" 
+                        data-id="${product.id}" 
+                        data-name="${product.name}" 
+                        data-price="${product.price}" 
+                        ${btnState}
+                    >
                         <i class="fa-solid fa-plus"></i> Add
                     </button>
                 </div>
