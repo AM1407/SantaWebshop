@@ -2,13 +2,12 @@ import { cart, resetCart } from './cart';
 import { showToast } from './toast';
 import emailjs from '@emailjs/browser';
 
-// --- CONFIGURATION ---
-// I have pre-filled these from your screenshot:
+
 const SERVICE_ID = "service_nexn2im";
 const TEMPLATE_ID = "template_n1qvxhn";
 const PUBLIC_KEY = "CxRBlJnj59867LJNw";
 
-// Selectors
+
 const checkoutBtn = document.querySelector('.checkout-btn');
 const modalElement = document.getElementById('checkoutModal');
 const summaryList = document.getElementById('checkout-summary-list');
@@ -17,7 +16,7 @@ const confirmBtn = document.getElementById('confirmOrderBtn') as HTMLButtonEleme
 const cancelBtn = document.getElementById('cancelCheckoutBtn');
 const closeXBtn = document.getElementById('closeModalBtn');
 
-// --- MODAL LOGIC ---
+
 function openModal() {
     if (!modalElement) return;
 
@@ -67,12 +66,12 @@ function renderCheckoutSummary() {
     checkoutTotal.textContent = `€${total.toFixed(2)}`;
 }
 
-// --- EMAIL DATA PREPARATION ---
+
 function prepareEmailParams() {
     const storedUser = localStorage.getItem('loggedInUser') || sessionStorage.getItem('loggedInUser');
     const userName = storedUser ? JSON.parse(storedUser).name : "Guest Santa";
 
-    // Build the HTML rows for the email table
+
     const productRowsHtml = cart.map(item => `
         <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 10px 5px;">
@@ -91,7 +90,7 @@ function prepareEmailParams() {
     return {
         to_name: userName,
 
-        // !!! IMPORTANT: CHANGE THIS TO YOUR EMAIL ADDRESS !!!
+
         to_email: "alessiomicciche@outlook.com",
 
         order_id: orderId,
@@ -100,7 +99,7 @@ function prepareEmailParams() {
     };
 }
 
-// --- EVENT LISTENERS ---
+
 if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
         if (cart.length > 0) {
@@ -114,7 +113,7 @@ if (checkoutBtn) {
 cancelBtn?.addEventListener('click', closeModal);
 closeXBtn?.addEventListener('click', closeModal);
 
-// --- SEND EMAIL LOGIC ---
+
 if (confirmBtn) {
     confirmBtn.addEventListener('click', () => {
 

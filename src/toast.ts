@@ -6,7 +6,7 @@ export function showToast(message: string, type: ToastType = 'success') {
 
     const toastEl = document.createElement('div');
     toastEl.className = `toast align-items-center text-white bg-${type} border-0 show`;
-    toastEl.style.zIndex = '1060'; // Ensure it sits on top
+    toastEl.style.zIndex = '1060';
     toastEl.innerHTML = `
         <div class="d-flex">
             <div class="toast-body">

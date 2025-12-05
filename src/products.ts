@@ -1,4 +1,4 @@
-// 1. Interface
+
 interface Product {
     id: string;
     name: string;
@@ -47,7 +47,7 @@ function createProductCard(product: Product): string {
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title text-truncate" title="${product.name}">${product.name}</h5>
                 
-                <!-- FIX: Removed 'text-truncate' class so full description shows -->
+                
                 <p class="card-text small text-muted">${product.description}</p>
                 
                 <div class="mt-auto pt-3 d-flex justify-content-between align-items-center border-top">

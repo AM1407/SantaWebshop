@@ -1,22 +1,22 @@
-/* Container for stacking toasts */
+
 .toast-container {
-    z-index: 1060; /* Higher than Bootstrap modal (1055) */
+    z-index: 1060;
 }
 
-/* The Toast itself */
+
 .toast {
     transition: all 0.3s ease-in-out;
     opacity: 0;
-    transform: translateX(100%); /* Start off-screen right */
+    transform: translateX(100%);
 }
 
-/* Animation class */
+
 .toast.show {
     opacity: 1;
-    transform: translateX(0); /* Slide in */
+    transform: translateX(0);
 }
 
-/* Force Toast to sit on top of Modals (z-index 1055) and Backdrops (1050) */
+
 #toast-container {
     z-index: 10000 !important;
 }

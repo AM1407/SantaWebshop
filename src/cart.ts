@@ -5,7 +5,7 @@ export interface CartItem {
     quantity: number;
 }
 
-// 1. EXPORT the cart so checkout.ts can read it
+
 export let cart: CartItem[] = [];
 
 const productList = document.querySelector('#productList');
@@ -16,10 +16,10 @@ const cartDropdown = document.querySelector('#cart-dropdown');
 const shoppingCartBtn = document.querySelector('#shoppingCartButton');
 const closeCartBtn = document.querySelector('#close-cart');
 
-// 2. EXPORT a reset function so checkout.ts can empty the cart
+
 export function resetCart() {
-    cart = []; // Empty the array
-    updateCartUI(); // Update the visuals
+    cart = [];
+    updateCartUI();
 }
 
 export function updateCartUI() {

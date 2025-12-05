@@ -6,7 +6,7 @@
     --dark-bg: #0F2027;
 }
 
-/* 1. GLOBAL TYPOGRAPHY */
+
 body {
     font-family: 'Nunito', sans-serif;
 
@@ -31,7 +31,7 @@ body {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
-/* 2. LOGIN STYLING */
+
 .login-container {
     position: fixed;
     top: 0;
@@ -72,13 +72,13 @@ body {
     box-shadow: 0 0 0 0.25rem rgba(212, 36, 38, 0.25);
 }
 
-/* 3. MAIN APP GLASS EFFECT */
+
 .glass-header {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.5);
 
-    /* FIX: Ensure the header sits on top of the hero/products below it */
+
     position: relative;
     z-index: 100;
 }
@@ -88,12 +88,12 @@ body {
     backdrop-filter: blur(5px);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 
-    /* Ensure it sits below the header */
+
     position: relative;
     z-index: 1;
 }
 
-/* 4. PRODUCT CARDS (Gift Style) */
+
 .product-card {
     border: none;
     border-radius: 12px;
@@ -124,7 +124,7 @@ body {
     z-index: 2;
 }
 
-/* 5. BUTTONS */
+
 .btn-danger {
     background-color: var(--santa-red);
     border: none;
@@ -151,7 +151,7 @@ body {
     border-color: var(--forest-green);
 }
 
-/* 6. CART DROPDOWN */
+
 .cart-dropdown-menu {
     display: none;
     position: absolute;
